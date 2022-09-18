@@ -1,5 +1,5 @@
-import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 	const { ethers, deployments } = hre;
@@ -7,12 +7,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
 	const [deployer] = await ethers.getSigners();
 
-	await deploy("Contract", {
+	await deploy("PopCat", {
 		from: deployer.address,
 		log: true,
-		contract: "Contract",
-		args: [],
+		contract: "PopCat",
+		args: [deployer.address, 125],
 	});
 };
 export default func;
-func.tags = ["testbed", "_contract"];
+func.tags = ["testbed", "_PopCat"];
