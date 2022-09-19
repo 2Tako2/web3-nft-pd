@@ -220,6 +220,7 @@ export interface PopCatInterface extends utils.Interface {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "SuccessfulMint(uint256,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "UriUpdated()": EventFragment;
   };
@@ -227,6 +228,7 @@ export interface PopCatInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SuccessfulMint"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UriUpdated"): EventFragment;
 }
@@ -266,6 +268,17 @@ export type OwnershipTransferredEvent = TypedEvent<
 
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface SuccessfulMintEventObject {
+  _tokenId: BigNumber;
+  _to: string;
+}
+export type SuccessfulMintEvent = TypedEvent<
+  [BigNumber, string],
+  SuccessfulMintEventObject
+>;
+
+export type SuccessfulMintEventFilter = TypedEventFilter<SuccessfulMintEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -628,6 +641,12 @@ export interface PopCat extends BaseContract {
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
+
+    "SuccessfulMint(uint256,address)"(
+      _tokenId?: null,
+      _to?: null
+    ): SuccessfulMintEventFilter;
+    SuccessfulMint(_tokenId?: null, _to?: null): SuccessfulMintEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,

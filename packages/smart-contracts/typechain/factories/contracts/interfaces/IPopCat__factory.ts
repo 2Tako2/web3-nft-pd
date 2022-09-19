@@ -27,6 +27,25 @@ const _abi = [
   },
   {
     anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "_tokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "_to",
+        type: "address",
+      },
+    ],
+    name: "SuccessfulMint",
+    type: "event",
+  },
+  {
+    anonymous: false,
     inputs: [],
     name: "UriUpdated",
     type: "event",

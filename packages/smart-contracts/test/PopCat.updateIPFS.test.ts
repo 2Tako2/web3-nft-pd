@@ -24,6 +24,12 @@ describe("PopCat Tests - updateIPFS", () => {
 		PopCat_Alice = PopCatContract.connect(alice);
 	});
 
+	it("should initialize with ipfs uri equals to given link", async () => {
+		await expect(await PopCatContract.ipfsUri()).to.eq(
+			"ipfs://QmddueuaHKWnyZSTaVReXqXHhUtg6gDEeKZQtG4Ekn9EMd"
+		);
+	});
+
 	it("should update ipfs uri", async () => {
 		await PopCat_Deployer.updateIPFS("fakelink");
 

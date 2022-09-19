@@ -29,7 +29,7 @@ contract PopCat is IPopCat, Ownable, ERC721URIStorage {
 
         totalSupply = _totalSupply;
         tokenCount = 0;
-        ipfsUri = "https://www.google.com";
+        ipfsUri = "ipfs://QmddueuaHKWnyZSTaVReXqXHhUtg6gDEeKZQtG4Ekn9EMd";
     }
 
     function mint(address _to) external payable override {
@@ -40,6 +40,8 @@ contract PopCat is IPopCat, Ownable, ERC721URIStorage {
         tokenCount += 1;
 
         _mint(_to, tokenCount);
+
+        emit SuccessfulMint(tokenCount, _to);
     }
 
     function updateIPFS(string calldata _uri) external override onlyOwner {

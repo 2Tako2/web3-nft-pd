@@ -48,11 +48,24 @@ export interface IPopCatInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "updateIPFS", data: BytesLike): Result;
 
   events: {
+    "SuccessfulMint(uint256,address)": EventFragment;
     "UriUpdated()": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "SuccessfulMint"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UriUpdated"): EventFragment;
 }
+
+export interface SuccessfulMintEventObject {
+  _tokenId: BigNumber;
+  _to: string;
+}
+export type SuccessfulMintEvent = TypedEvent<
+  [BigNumber, string],
+  SuccessfulMintEventObject
+>;
+
+export type SuccessfulMintEventFilter = TypedEventFilter<SuccessfulMintEvent>;
 
 export interface UriUpdatedEventObject {}
 export type UriUpdatedEvent = TypedEvent<[], UriUpdatedEventObject>;
@@ -117,6 +130,12 @@ export interface IPopCat extends BaseContract {
   };
 
   filters: {
+    "SuccessfulMint(uint256,address)"(
+      _tokenId?: null,
+      _to?: null
+    ): SuccessfulMintEventFilter;
+    SuccessfulMint(_tokenId?: null, _to?: null): SuccessfulMintEventFilter;
+
     "UriUpdated()"(): UriUpdatedEventFilter;
     UriUpdated(): UriUpdatedEventFilter;
   };

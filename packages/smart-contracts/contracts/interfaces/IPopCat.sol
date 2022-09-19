@@ -13,6 +13,9 @@ interface IPopCat {
      */
     function updateIPFS(string calldata _uri) external;
 
+    /// @notice event emit when new successful mint
+    event SuccessfulMint(uint256 _tokenId, address _to);
+
     /// @notice event emit when the owner updated the ipfs uri
     event UriUpdated();
 
