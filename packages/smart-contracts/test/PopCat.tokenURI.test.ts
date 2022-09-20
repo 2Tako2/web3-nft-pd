@@ -7,7 +7,7 @@ import { PopCat } from "../typechain";
 
 use(chaiAsPromised);
 
-describe("PopCat Tests - updateIPFS", () => {
+describe("PopCat Tests - tokenURI", () => {
 	let PopCatContract: PopCat;
 	let deployer: SignerWithAddress;
 	let alice: SignerWithAddress;
@@ -24,21 +24,25 @@ describe("PopCat Tests - updateIPFS", () => {
 		PopCat_Alice = PopCatContract.connect(alice);
 	});
 
-	it("should initialize with ipfs uri equals to given link", async () => {
-		await expect(await PopCatContract.ipfsUri()).to.eq(
-			"ipfs://QmddueuaHKWnyZSTaVReXqXHhUtg6gDEeKZQtG4Ekn9EMd"
+	it("should return default tokenUriBase", async () => {
+		await expect(await PopCat_Alice.tokenURI(1)).to.eq(
+			"ipfs://QmRvxvHqY5vKgnBegGsYsci39QgpmkP2B52jGcbqxprX2q"
 		);
 	});
 
-	it("should update ipfs uri", async () => {
-		await PopCat_Deployer.updateIPFS("fakelink");
-
-		await expect(await PopCatContract.ipfsUri()).to.eq("fakelink");
+	it("should return default tokenUriBase", async () => {
+		await PopCat_Deployer.updateTokenUriBase(
+			"ipfs://QmVNmTcQLZoqC1rQbgh2zaENJvuYSaUDWbZXKQMExKyDKQ"
+		);
+		await expect(await PopCat_Alice.tokenURI(1)).to.eq(
+			"ipfs://QmVNmTcQLZoqC1rQbgh2zaENJvuYSaUDWbZXKQMExKyDKQ/1"
+		);
 	});
 
-	it("should revert if not owner", async () => {
-		await expect(PopCat_Alice.updateIPFS("fakelink")).to.revertedWith(
-			"Ownable: caller is not the owner"
+	it("should revert provide invalid token id", async () => {
+		await expect(PopCat_Alice.tokenURI(200)).to.revertedWithCustomError(
+			PopCatContract,
+			"TokenIdNotFound"
 		);
 	});
 });

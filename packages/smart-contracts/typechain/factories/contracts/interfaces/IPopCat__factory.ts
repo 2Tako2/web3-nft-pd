@@ -26,6 +26,11 @@ const _abi = [
     type: "error",
   },
   {
+    inputs: [],
+    name: "TokenIdNotFound",
+    type: "error",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -66,12 +71,31 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "_tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "tokenURI",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "string",
         name: "_uri",
         type: "string",
       },
     ],
-    name: "updateIPFS",
+    name: "updateTokenUriBase",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

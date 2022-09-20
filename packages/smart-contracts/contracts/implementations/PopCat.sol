@@ -3,14 +3,19 @@ pragma solidity 0.8.17;
 
 import "../interfaces/IPopCat.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract PopCat is IPopCat, Ownable, ERC721URIStorage {
+contract PopCat is IPopCat, Ownable, ERC721 {
     uint256 public totalSupply;
 
     uint256 public tokenCount;
 
-    string public ipfsUri;
+    string public tokenUriBase;
+
+    bool public revealed;
+
+    string public constant contractURI =
+        "ipfs://QmbeEAU4bDVAfCvrD1izozZQ4Jr2etZLjjrayfxGpQo9Ln";
 
     constructor(address _ownerAddress, uint256 _totalSupply)
         ERC721("PopPopPopCat", "PC")
@@ -29,7 +34,8 @@ contract PopCat is IPopCat, Ownable, ERC721URIStorage {
 
         totalSupply = _totalSupply;
         tokenCount = 0;
-        ipfsUri = "ipfs://QmddueuaHKWnyZSTaVReXqXHhUtg6gDEeKZQtG4Ekn9EMd";
+        revealed = false;
+        tokenUriBase = "ipfs://QmRvxvHqY5vKgnBegGsYsci39QgpmkP2B52jGcbqxprX2q";
     }
 
     function mint(address _to) external payable override {
@@ -44,7 +50,24 @@ contract PopCat is IPopCat, Ownable, ERC721URIStorage {
         emit SuccessfulMint(tokenCount, _to);
     }
 
-    function updateIPFS(string calldata _uri) external override onlyOwner {
-        ipfsUri = _uri;
+    function updateTokenUriBase(string calldata _uri)
+        external
+        override
+        onlyOwner
+    {
+        tokenUriBase = _uri;
+        revealed = true;
+    }
+
+    function tokenURI(uint256 _tokenId)
+        public
+        view
+        override(ERC721, IPopCat)
+        returns (string memory)
+    {
+        if (_tokenId > totalSupply) revert TokenIdNotFound();
+        if (!revealed) return tokenUriBase;
+
+        return string.concat(tokenUriBase, "/", Strings.toString(_tokenId));
     }
 }

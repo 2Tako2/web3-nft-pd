@@ -4,6 +4,7 @@
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -30,22 +31,33 @@ import type {
 export interface IPopCatInterface extends utils.Interface {
   functions: {
     "mint(address)": FunctionFragment;
-    "updateIPFS(string)": FunctionFragment;
+    "tokenURI(uint256)": FunctionFragment;
+    "updateTokenUriBase(string)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "mint" | "updateIPFS"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "mint" | "tokenURI" | "updateTokenUriBase"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "mint",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateIPFS",
+    functionFragment: "tokenURI",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateTokenUriBase",
     values: [PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "updateIPFS", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "updateTokenUriBase",
+    data: BytesLike
+  ): Result;
 
   events: {
     "SuccessfulMint(uint256,address)": EventFragment;
@@ -104,7 +116,12 @@ export interface IPopCat extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateIPFS(
+    tokenURI(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    updateTokenUriBase(
       _uri: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -115,7 +132,12 @@ export interface IPopCat extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateIPFS(
+  tokenURI(
+    _tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  updateTokenUriBase(
     _uri: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -123,7 +145,12 @@ export interface IPopCat extends BaseContract {
   callStatic: {
     mint(_to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateIPFS(
+    tokenURI(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    updateTokenUriBase(
       _uri: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -146,7 +173,12 @@ export interface IPopCat extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateIPFS(
+    tokenURI(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    updateTokenUriBase(
       _uri: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -158,7 +190,12 @@ export interface IPopCat extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateIPFS(
+    tokenURI(
+      _tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateTokenUriBase(
       _uri: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

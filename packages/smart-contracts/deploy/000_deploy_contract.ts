@@ -11,7 +11,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 		from: deployer.address,
 		log: true,
 		contract: "PopCat",
-		args: [deployer.address, 125],
+		args: [deployer.address, 64],
 	});
 };
 export default func;

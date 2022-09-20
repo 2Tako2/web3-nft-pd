@@ -39,8 +39,8 @@ describe("PopCat Tests - deploy", () => {
 			await expect(await PopCatContract.tokenCount()).to.eq(0);
 		});
 
-		it("should initialize totalSupply as 125", async () => {
-			await expect(await PopCatContract.totalSupply()).to.eq(125);
+		it("should initialize totalSupply as 64", async () => {
+			await expect(await PopCatContract.totalSupply()).to.eq(64);
 		});
 	});
 
@@ -50,7 +50,7 @@ describe("PopCat Tests - deploy", () => {
 				from: deployer.address,
 				log: false,
 				contract: "PopCat",
-				args: [alice.address, 125],
+				args: [alice.address, 64],
 			});
 			PopCatContract = await ethers.getContract("PopCat2");
 

@@ -51,7 +51,7 @@ const main = () => {
 
 	metadataList.forEach((metadata, index) => {
 		writeFileSync(
-			`../scripts/PopCatMetadataList/${index + 1}.json`,
+			`./PopCatMetadataList/${index + 1}.json`,
 			JSON.stringify(metadata)
 		);
 	});

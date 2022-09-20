@@ -11,7 +11,9 @@ interface IPopCat {
     /**
      * @notice This allow owner to update the IPFS uri
      */
-    function updateIPFS(string calldata _uri) external;
+    function updateTokenUriBase(string calldata _uri) external;
+
+    function tokenURI(uint256 _tokenId) external returns (string memory);
 
     /// @notice event emit when new successful mint
     event SuccessfulMint(uint256 _tokenId, address _to);
@@ -27,4 +29,7 @@ interface IPopCat {
 
     /// @notice Cannot mint token due to maxSupply reached
     error ExceedingMaxSupply();
+
+    /// @notice Cannot find given token id
+    error TokenIdNotFound();
 }
